@@ -1,0 +1,1 @@
+# .env validations using pydentic
