@@ -1,0 +1,5 @@
+Flask
+Flask-SQLAlchemy
+Flask-Injector
+psycopg2-binary
+python-dotenv
