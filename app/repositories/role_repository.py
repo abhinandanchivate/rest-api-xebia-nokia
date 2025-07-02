@@ -1,7 +1,7 @@
 import logging
 from sqlalchemy.exc import SQLAlchemyError
 from app.models.role import Role
-from app import db
+from app.extensions import db
 
 logger = logging.getLogger(__name__)
 

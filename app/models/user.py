@@ -1,4 +1,4 @@
-from app import db
+from app.extensions import db
 
 
 class User(db.Model):
@@ -10,4 +10,4 @@ class User(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
-    role = db.relationship('Role', backref=db.backref('users', lazy=True))
+    role = db.relationship('Role', back_populates='users') 

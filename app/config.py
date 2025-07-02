@@ -1,9 +1,9 @@
-# .env validations using pydentic
-import os
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
 
-load_dotenv()
+class Config(BaseSettings):
+    SQLALCHEMY_DATABASE_URI: str
+    SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 
-class Config:
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    class Config:
+        env_file = ".env"
+        extra = "ignore"  # To ignore any extra keys like flask_env
