@@ -3,6 +3,7 @@ from flask_injector import inject
 from pydantic import ValidationError
 from app.services.user_service import UserService
 from app.models.user import User_tbl as User
+from app.utils.create_jwt import create_jwt_token
 from app.schemas.user_schema import UserCreateReq,UserResponseSchema
 user_blueprint = Blueprint("user_routes", __name__)  # No url_prefix here; handled in root_routes.py
 
@@ -35,10 +36,12 @@ def create_user(user_service: UserService):
         new_user = User(
         name=data.get("name"),
         email=data.get("email"),
+        password=data.get("password"),
         age=data.get("age"),
         is_active=data.get("is_active", True),
         role_id=data.get("role_id")
     )
+        new_user.set_password(user_data.password)  # Hash the password before saving
         user = user_service.create_user(new_user)
         # user_dict = {
         #     "id": user.id,
@@ -51,6 +54,8 @@ def create_user(user_service: UserService):
         #     "updated_at": user.updated_at
         # }
         user_dict = {column.name: getattr(user, column.name) for column in User.__table__.columns}
+        # add jwt token to user_dict
+        user_dict["jwt_token"] = create_jwt_token(email=user_dict.get('email'),user_id=user_dict.get('id')) # Assuming get_jwt_token is a method in User model
 
         # print(user.__dict__)
         # user_dict = {key: value for key, value in user.__dict__.items() if not key.startswith('_')}
