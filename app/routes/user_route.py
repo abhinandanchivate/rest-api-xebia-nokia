@@ -1,14 +1,14 @@
 from flask import Blueprint, jsonify, request
 from flask_injector import inject
 from app.services.user_service import UserService
-from app.models.user import User
+from app.models.user import User_tbl as User
 
 user_blueprint = Blueprint("user_routes", __name__)  # No url_prefix here; handled in root_routes.py
 
 @user_blueprint.route("/", methods=["GET"])
 @inject
 def get_all_users(user_service: UserService):
-    users = user_service.get_users()
+    users = user_service.get_all_users()
     return jsonify([{
         "id": u.id,
         "name": u.name,
@@ -18,7 +18,7 @@ def get_all_users(user_service: UserService):
 @user_blueprint.route("/<int:user_id>", methods=["GET"])
 @inject
 def get_user_by_id(user_id, user_service: UserService):
-    user = user_service.get_user(user_id)
+    user = user_service.get_user_by_id(user_id)
     if user:
         return jsonify({"id": user.id, "name": user.name, "email": user.email})
     return jsonify({"error": "User not found"}), 404

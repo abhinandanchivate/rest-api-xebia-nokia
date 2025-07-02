@@ -5,9 +5,9 @@ class Asset(db.Model):
     name = db.Column(db.String(100))
     category = db.Column(db.String(100))
     value = db.Column(db.Float)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user_tbl.id'))
     purchase_date = db.Column(db.Date)
 
-    user = db.relationship("User", backref="assets")
+    user = db.relationship("User_tbl", backref="assets")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())

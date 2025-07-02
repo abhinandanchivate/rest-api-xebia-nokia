@@ -1,5 +1,5 @@
 from app.repositories.user_repository import UserRepository
-from app.models.user import User
+from app.models.user import User_tbl as User
 
 class UserService:
     def __init__(self, user_repository: UserRepository):

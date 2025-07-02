@@ -1,0 +1,351 @@
+{
+  "info": {
+    "_postman_id": "40713c32-3ce7-4440-8fd4-38fa1d2eec29",
+    "name": "ORVYN Flask API",
+    "description": "Auto-generated Postman collection for /api/users, /api/roles, and /api/assets endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3829863"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GET http://localhost:9800/api/users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET http://localhost:9800/api/users/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST http://localhost:9800/api/users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"age\": 30,\n  \"is_active\": true,\n  \"role_id\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9800/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT http://localhost:9800/api/users/1",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Updated\",\n  \"email\": \"john.updated@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9800/api/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE http://localhost:9800/api/users/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/users/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET http://localhost:9800/api/users/search?email=john@example.com",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/users/search?email=john@example.com",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "users", "search"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "john@example.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET http://localhost:9800/api/users/paginated?page=1&per_page=10",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/users/paginated?page=1&per_page=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "users", "paginated"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "GET http://localhost:9800/api/roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET http://localhost:9800/api/roles/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/roles/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "roles", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST http://localhost:9800/api/roles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Manager\",\n  \"description\": \"Manages things\",\n  \"level\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9800/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT http://localhost:9800/api/roles/1",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Senior Manager\",\n  \"level\": 6\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9800/api/roles/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "roles", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE http://localhost:9800/api/roles/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/roles/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "roles", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assets",
+      "item": [
+        {
+          "name": "GET http://localhost:9800/api/assets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET http://localhost:9800/api/assets/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/assets/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "assets", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST http://localhost:9800/api/assets",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Laptop\",\n  \"category\": \"Electronics\",\n  \"value\": 75000,\n  \"purchase_date\": \"2025-07-02T07:29:41.061017\",\n  \"user_id\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9800/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT http://localhost:9800/api/assets/1",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Laptop\",\n  \"value\": 70000\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9800/api/assets/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "assets", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE http://localhost:9800/api/assets/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9800/api/assets/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9800",
+              "path": ["api", "assets", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

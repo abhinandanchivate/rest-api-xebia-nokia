@@ -7,4 +7,4 @@ class Role(db.Model):
     level = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-    users = db.relationship("User", back_populates="role")
+    users = db.relationship("User_tbl", back_populates="role")

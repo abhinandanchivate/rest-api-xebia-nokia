@@ -1,6 +1,6 @@
 import logging
 from sqlalchemy.exc import SQLAlchemyError
-from app.models.user import User
+from app.models.user import User_tbl as User
 from app.extensions import db
 
 logger = logging.getLogger(__name__)
