@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_injector import inject
+from pydantic import ValidationError
 from app.services.user_service import UserService
 from app.models.user import User_tbl as User
-
+from app.schemas.user_schema import UserCreateReq,UserResponseSchema
 user_blueprint = Blueprint("user_routes", __name__)  # No url_prefix here; handled in root_routes.py
 
 @user_blueprint.route("/", methods=["GET"])
@@ -26,16 +27,52 @@ def get_user_by_id(user_id, user_service: UserService):
 @user_blueprint.route("/", methods=["POST"])
 @inject
 def create_user(user_service: UserService):
-    data = request.get_json()
-    new_user = User(
+
+    try:
+        data = request.get_json()
+        user_data = UserCreateReq(**data)
+
+        new_user = User(
         name=data.get("name"),
         email=data.get("email"),
         age=data.get("age"),
         is_active=data.get("is_active", True),
         role_id=data.get("role_id")
     )
-    user = user_service.create_user(new_user)
-    return jsonify({"id": user.id}), 201
+        user = user_service.create_user(new_user)
+        # user_dict = {
+        #     "id": user.id,
+        #     "name": user.name,
+        #     "email": user.email,
+        #     "age": user.age,
+        #     "is_active": user.is_active,
+        #     "role_id": user.role_id,
+        #     "created_at": user.created_at,
+        #     "updated_at": user.updated_at
+        # }
+        user_dict = {column.name: getattr(user, column.name) for column in User.__table__.columns}
+
+        # print(user.__dict__)
+        # user_dict = {key: value for key, value in user.__dict__.items() if not key.startswith('_')}
+
+        user_response = UserResponseSchema.model_validate(user_dict).model_dump() # Convert to dict for JSON response
+            # (
+            # id=user.id,
+            # name=user.name,
+            # email=user.email,
+            # age=user.age,
+            # is_active=user.is_active,
+            # role_id=user.role_id)
+        return jsonify(user_response), 201
+    except ValidationError as ve:
+        # Format validation error into a user-friendly structure
+        error_messages = {
+            "error": [{"field": e['loc'], "message": e['msg']} for e in ve.errors()]
+        }
+        return jsonify(error_messages), 400
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @user_blueprint.route("/<int:user_id>", methods=["PUT"])
 @inject
