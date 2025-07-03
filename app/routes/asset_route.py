@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_injector import inject
+from flask_jwt_extended import jwt_required
 from app.services.asset_service import AssetService
 from app.models.asset import Asset
 
@@ -7,6 +8,7 @@ asset_blueprint = Blueprint("asset_routes", __name__)  # Mounted under /api/asse
 
 @asset_blueprint.route("/", methods=["GET"])
 @inject
+@jwt_required()
 def get_all_assets(asset_service: AssetService):
     assets = asset_service.get_all_assets()
     return jsonify([{
@@ -20,6 +22,7 @@ def get_all_assets(asset_service: AssetService):
 
 @asset_blueprint.route("/<int:asset_id>", methods=["GET"])
 @inject
+@jwt_required()
 def get_asset_by_id(asset_id, asset_service: AssetService):
     asset = asset_service.get_asset_by_id(asset_id)
     if asset:
@@ -35,6 +38,7 @@ def get_asset_by_id(asset_id, asset_service: AssetService):
 
 @asset_blueprint.route("/", methods=["POST"])
 @inject
+@jwt_required()
 def create_asset(asset_service: AssetService):
     data = request.get_json()
     new_asset = Asset(
@@ -51,6 +55,7 @@ def create_asset(asset_service: AssetService):
 
 @asset_blueprint.route("/<int:asset_id>", methods=["PUT"])
 @inject
+@jwt_required()
 def update_asset(asset_id, asset_service: AssetService):
     data = request.get_json()
     updated = asset_service.update_asset(asset_id, data)
@@ -60,6 +65,7 @@ def update_asset(asset_id, asset_service: AssetService):
 
 @asset_blueprint.route("/<int:asset_id>", methods=["DELETE"])
 @inject
+@jwt_required()
 def delete_asset(asset_id, asset_service: AssetService):
     success = asset_service.delete_asset(asset_id)
     if success:

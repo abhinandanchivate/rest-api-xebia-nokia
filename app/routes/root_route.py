@@ -4,6 +4,7 @@ from flask import Flask, Blueprint
 from app.routes.user_route import user_blueprint
 from app.routes.role_route import role_blueprint
 from app.routes.asset_route import asset_blueprint
+from app.routes.auth_route import auth_bp
 
 # Create common parent blueprint for /api
 api = Blueprint("api", __name__, url_prefix="/api")
@@ -12,6 +13,7 @@ api = Blueprint("api", __name__, url_prefix="/api")
 api.register_blueprint(user_blueprint, url_prefix="/users")
 api.register_blueprint(role_blueprint, url_prefix="/roles")
 api.register_blueprint(asset_blueprint, url_prefix="/assets")
+api.register_blueprint(auth_bp, url_prefix="/auth")
 
 def register_all_routes(app: Flask):
     app.register_blueprint(api)

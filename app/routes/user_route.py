@@ -1,14 +1,20 @@
 from flask import Blueprint, jsonify, request
 from flask_injector import inject
 from pydantic import ValidationError
+# @jwtrequired
+from flask_jwt_extended import jwt_required
+
 from app.services.user_service import UserService
 from app.models.user import User_tbl as User
 from app.utils.create_jwt import create_jwt_token
 from app.schemas.user_schema import UserCreateReq,UserResponseSchema
 user_blueprint = Blueprint("user_routes", __name__)  # No url_prefix here; handled in root_routes.py
 
+
+
 @user_blueprint.route("/", methods=["GET"])
 @inject
+@jwt_required()  # Ensure that this route requires a valid JWT token
 def get_all_users(user_service: UserService):
     users = user_service.get_all_users()
     return jsonify([{
@@ -19,7 +25,9 @@ def get_all_users(user_service: UserService):
 
 @user_blueprint.route("/<int:user_id>", methods=["GET"])
 @inject
+@jwt_required()
 def get_user_by_id(user_id, user_service: UserService):
+    
     user = user_service.get_user_by_id(user_id)
     if user:
         return jsonify({"id": user.id, "name": user.name, "email": user.email})
@@ -81,6 +89,7 @@ def create_user(user_service: UserService):
 
 @user_blueprint.route("/<int:user_id>", methods=["PUT"])
 @inject
+@jwt_required()
 def update_user(user_id, user_service: UserService):
     data = request.get_json()
     updated = user_service.update_user(user_id, data)
@@ -90,6 +99,7 @@ def update_user(user_id, user_service: UserService):
 
 @user_blueprint.route("/<int:user_id>", methods=["DELETE"])
 @inject
+@jwt_required()
 def delete_user(user_id, user_service: UserService):
     success = user_service.delete_user(user_id)
     if success:
@@ -98,6 +108,7 @@ def delete_user(user_id, user_service: UserService):
 
 @user_blueprint.route("/search", methods=["GET"])
 @inject
+@jwt_required()
 def search_user(user_service: UserService):
     email = request.args.get("email")
     if not email:
@@ -118,6 +129,7 @@ def search_user(user_service: UserService):
 
 @user_blueprint.route("/paginated", methods=["GET"])
 @inject
+@jwt_required()
 def get_users_paginated(user_service: UserService):
     try:
         page = int(request.args.get("page", 1))

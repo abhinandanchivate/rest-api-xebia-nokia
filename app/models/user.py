@@ -18,5 +18,5 @@ class User_tbl(db.Model):
 
     # Method to check if the password matches the stored hash
     def check_password(self, password: str) -> bool:
-        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+        return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
     
