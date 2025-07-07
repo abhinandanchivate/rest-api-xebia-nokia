@@ -3,7 +3,7 @@ from flask_injector import inject
 from pydantic import ValidationError
 # @jwtrequired
 from flask_jwt_extended import jwt_required
-
+from app.middleware.permissions import permission_required
 from app.services.user_service import UserService
 from app.models.user import User_tbl as User
 from app.utils.create_jwt import create_jwt_token
@@ -14,7 +14,9 @@ user_blueprint = Blueprint("user_routes", __name__)  # No url_prefix here; handl
 
 @user_blueprint.route("/", methods=["GET"])
 @inject
-@jwt_required()  # Ensure that this route requires a valid JWT token
+@jwt_required() 
+@permission_required("read")  # Assuming you have a permission for viewing users
+ # Ensure that this route requires a valid JWT token
 def get_all_users(user_service: UserService):
     users = user_service.get_all_users()
     return jsonify([{

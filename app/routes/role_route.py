@@ -3,7 +3,7 @@ from flask_injector import inject
 from flask_jwt_extended import jwt_required
 from app.services.role_service import RoleService
 from app.models.role import Role
-
+from app.middleware.permissions import permission_required
 role_blueprint = Blueprint("role_routes", __name__)  # Mounted under /api/roles
 
 @role_blueprint.route("/", methods=["GET"])
@@ -37,16 +37,18 @@ def get_role_by_id(role_id, role_service: RoleService):
 @role_blueprint.route("/", methods=["POST"])
 @inject
 @jwt_required()
+@permission_required("create")  # Assuming you have a permission for creating roles
 def create_role(role_service: RoleService):
     data = request.get_json()
     new_role = Role(
         name=data.get("name"),
         description=data.get("description"),
-        level=data.get("level")
+        level=data.get("level"),
+        permissions=data.get("permissions"),  # Assuming permission is a json
     )
     role = role_service.create_role(new_role)
     if role:
-        return jsonify({"message": "Role created", "id": role.id}), 201
+        return jsonify({"message": "Role created", "role": role.to_dict()}), 201
     return jsonify({"error": "Failed to create role"}), 400
 
 @role_blueprint.route("/<int:role_id>", methods=["PUT"])

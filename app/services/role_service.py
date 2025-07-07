@@ -12,6 +12,7 @@ class RoleService:
         return self.role_repository.get_by_id(role_id)
 
     def create_role(self, role: Role):
+        print("Creating role with data:", role.to_dict())
         return self.role_repository.add(role)
 
     def update_role(self, role_id, updated_data: dict):
